@@ -13,6 +13,14 @@
 		  <button type="submit">Submit</button>
 		</form>
 
-		
+		<ul class="messages">
+			<% for(var i=0; i<messages.length; i++) {%>
+		    <li class="message">
+		      <span><%= messages[i].name %></span>
+		      <span><%= messages[i].message %></span>
+		    </li>
+		  <% } %>
+		</ul>
+
 	</body>
 </html>
