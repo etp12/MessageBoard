@@ -11,7 +11,7 @@ var cron = require('cron')
 var fs = require('fs')
 var util = require('util')
 
-const PORT = 3000;
+const PORT = (process.env.PORT || 3000);
 
 const headers = {
     'User-Agent':       'Super Agent/0.0.1',
