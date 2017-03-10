@@ -18,7 +18,7 @@ const headers = {
     'Content-Type':     'application/x-www-form-urlencoded'
 };
 
-const uploadScanner = cron.job('0 0 * * * *', function() {
+const uploadScanner = cron.job('0 * * * * *', function() {
 	console.log('Scanning directory..');
 
 	var fileList = fs.readdirSync(__dirname + '/uploads');

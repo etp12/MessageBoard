@@ -9,6 +9,37 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- Optional Bootstrap theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<script>
+		function validateMessage() {
+			var file = document.forms["messageForm"]["file"].value;
+			var name = document.forms["messageForm"]["name"].value;
+			var message = document.forms["messageForm"]["message"].value;
+			var errorMsg = document.getElementById("errorMessage");
+			if (!file) {
+				errorMsg.style.visibility = 'visible';
+				errorMsg.innerHTML = 'Please enter a valid file!';
+				return false;
+			} else {
+				errorMsg.style.visibility = 'hidden';
+			}
+			if (!name) {
+				errorMsg.style.visibility = 'visible';
+				errorMsg.innerHTML = 'Please enter a valid name!';
+				return false;
+			} else {
+				errorMsg.style.visibility = 'hidden';
+			}
+			if (!message) {
+				errorMsg.style.visibility = 'visible';
+				errorMsg.innerHTML = 'Please enter a valid message!';
+				return false;
+			} else {
+				errorMsg.style.visibility = 'hidden';
+			}
+		}
+	</script>
+
 </head>
 
 <body>
@@ -20,20 +51,24 @@
 
 		</div>
 
-		<form action="/api/messages" method="POST" enctype="multipart/form-data">
+		<div class="errorContainer">
+			<p id="errorMessage" style="visibility:hidden; color:red;"> msg </p>
+		</div>
+		<form action="/api/messages" method="POST" enctype="multipart/form-data"
+			onsubmit="return validateMessage()" name="messageForm">
 			<table class="formTable" style="display: table;">
 			<tbody>
 				<tr>
 					<td> Name </td>
 					<td>
-		  			<input type="text" placeholder="name" name="name">
+		  			<input type="text" placeholder="name" name="name" tabindex="2">
 					</td>
 				</tr>
 
 				<tr>
 					<td> Message </td>
 					<td>
-		  			<input type="text" placeholder="message" name="message">
+		  			<textarea name="message" cols="48" rows="4" wrap="soft" tabindex="4"></textarea>
 					</td>
 				</tr>
 
@@ -57,14 +92,23 @@
 		<div class="messages">
 
 		<% for(var i=0; i<messages.length; i++) {%>
-	    <div class="message">
-	      <span><%= messages[i].name %></span>
-	      <span><%= messages[i].message %></span>
-				<% if (messages[i].filepath) {%>
-				<span><img src= <%= messages[i].filepath %> style="max-height:150px; max-width:150px;
-    		height:auto;width:auto;"> </span>
-				<%} %>
-	    </div>
+	    <div class="row">
+				<div class="col-xs-2">
+	      	<span> <strong> <%= messages[i].name %> </strong> </span>
+				</div>
+
+				<div class="col-xs-2">
+					<span><%= messages[i].message %></span>
+				</div>
+
+				<div class="col-xs-2">
+					<% if (messages[i].filepath) {%>
+						<span><img src= <%= messages[i].filepath %> style="max-height:150px; max-width:150px;
+    			height:auto;width:auto;"> </span>
+					<%} %>
+				</div>
+			</div>
+			<hr>
 	  <% } %>
 	</div>
 	</div>
